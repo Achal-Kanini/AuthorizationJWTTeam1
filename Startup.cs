@@ -30,6 +30,7 @@ namespace AuthorizationService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddControllers();
             services.AddSwaggerGen();
             services.AddScoped<IAuthProvider,AuthProvider>();
@@ -63,6 +64,7 @@ namespace AuthorizationService
             }
             loggerFactory.AddLog4Net();
             app.UseSwagger();
+            app.UseCors(options => options.WithOrigins().AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Authorization Service");
